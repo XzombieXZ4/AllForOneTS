@@ -7,6 +7,7 @@ interface ToDoContextProps {
   noteListState: noteWithKey[];
   state: boolean;
   note: noteInterface;
+  search: string;
   changeVisible: () => void;
   getInput: (val: ChangeEvent<HTMLInputElement>) => void;
   getTitle: (val: ChangeEvent<HTMLInputElement>) => void;
@@ -29,10 +30,9 @@ const initialState: noteWithKey[] = [];
 export const ToDoProvider = ({ children }: props) => {
   const [noteListState, dispatch] = useReducer(toDoReducer, initialState);
   const [visible, setVisible] = useState<boolean>(true);
-  const { getInput, getNote, getTitle, resetNote, n } = useTodo();
+  const { getInput, getNote, getTitle, resetNote, n, search } = useTodo();
   const changeVisible = () => {
     setVisible(!visible);
-    console.log(noteListState);
   };
   const addNote = () => {
     dispatch({ type: "addNote", n });
@@ -53,6 +53,7 @@ export const ToDoProvider = ({ children }: props) => {
         getNote,
         getTitle,
         resetNote,
+        search,
       }}
     >
       {children}

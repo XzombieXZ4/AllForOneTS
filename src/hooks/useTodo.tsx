@@ -1,8 +1,8 @@
 import { useState, ChangeEvent } from "react";
-import { noteInterface } from "../interfaces/ToDoInterfaces";
+import { noteInterface, noteWithKey } from "../interfaces/ToDoInterfaces";
 
 export const useTodo = () => {
-  const [search, setSearch] = useState<string>();
+  const [search, setSearch] = useState<string>("");
   const [n, setN] = useState<noteInterface>({ title: "", note: "" });
   const getInput = (val: ChangeEvent<HTMLInputElement>) => {
     setSearch(val.target.value);
@@ -18,6 +18,7 @@ export const useTodo = () => {
   const resetNote = () => {
     return setN({ title: "", note: "" });
   };
+  const editN = (note: noteWithKey) => {};
   return {
     search,
     getInput,

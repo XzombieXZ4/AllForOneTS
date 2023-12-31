@@ -14,7 +14,9 @@ export const toDoReducer = (
       const note: noteWithKey = { ...action.n, key: action.n.title + keyGen() };
       return [note, ...noteListState];
     case "deleteNote":
-      const filterNote = noteListState.filter((note) => note.key != action.key);
+      const filterNote = noteListState.filter((note) => {
+        if (note.key != action.key) return note;
+      });
       return [...filterNote];
     default:
       return noteListState;
