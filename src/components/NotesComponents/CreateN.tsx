@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import { ToDoContext } from "../../context/ToDoContext";
-import { noteWithKey } from "../../interfaces/ToDoInterfaces";
 
 export const CreateN = () => {
   const {
@@ -13,10 +12,8 @@ export const CreateN = () => {
     note,
     editNote,
   } = useContext(ToDoContext);
-  let key: string | undefined;
-  useEffect(() => {
-    key = note.key;
-  }, [note.key]);
+
+  useEffect(() => {}, []);
   return (
     <div
       className={`fixed top-[7.5rem] left-4 mx-3.5 animate__animated animate__faster w-10/12  h-96 flex flex-col grow bg-indigo-800 rounded-lg md:left-12 lg:left-[4.6rem] xl:left-[5.6rem] 2xl:left-[9.2rem] ${
@@ -35,11 +32,11 @@ export const CreateN = () => {
         placeholder="Write ToDo"
         onChange={getNote}
       />
-      {key ? (
+      {note.key ? (
         <button
           className="flex absolute right-5 bottom-4 h-10 w-10"
           onClick={() => {
-            editNote(note);
+            editNote(note.key);
             changeVisible();
             resetNote();
             console.log("edit");
