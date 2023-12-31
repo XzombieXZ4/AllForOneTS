@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { ToDoContext } from "../../context/ToDoContext";
-import { noteWithKey } from "../../interfaces/ToDoInterfaces";
+import { noteInterface } from "../../interfaces/ToDoInterfaces";
 
 interface props {
-  not: noteWithKey;
+  not: noteInterface;
 }
 
-export const Note = ({ not }: props) => {
-  const { changeVisible, deleteNote } = useContext(ToDoContext);
-  const { key, note, title } = not;
+export const Note = ({ not: { note, title, key } }: props) => {
+  const { changeVisible, deleteNote, editT } = useContext(ToDoContext);
   return (
     <>
       {title && <h4 className="text-xl font-semibold pl-4">{title}</h4>}
@@ -26,6 +25,7 @@ export const Note = ({ not }: props) => {
       <button
         className="absolute right-3 bottom-1.5 w-10 h-10"
         onClick={() => {
+          editT({ note, title, key });
           changeVisible();
         }}
       >

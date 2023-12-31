@@ -1,10 +1,10 @@
 import { createContext, useReducer, useState, ChangeEvent } from "react";
-import { noteInterface, noteWithKey } from "../interfaces/ToDoInterfaces";
+import { noteInterface } from "../interfaces/ToDoInterfaces";
 import { toDoReducer } from "../helpers/toDoReducer";
 import { useTodo } from "../hooks/useTodo";
 
 interface ToDoContextProps {
-  noteListState: noteWithKey[];
+  noteListState: noteInterface[];
   state: boolean;
   note: noteInterface;
   search: string;
@@ -15,6 +15,8 @@ interface ToDoContextProps {
   deleteNote: (key: string) => void;
   resetNote: () => void;
   addNote: () => void;
+  editT: (note: noteInterface) => void;
+  editNote: (key: string) => void;
 }
 
 interface props {
@@ -25,12 +27,13 @@ export const ToDoContext = createContext<ToDoContextProps>(
   {} as ToDoContextProps
 );
 
-const initialState: noteWithKey[] = [];
+const initialState: noteInterface[] = [];
 
 export const ToDoProvider = ({ children }: props) => {
   const [noteListState, dispatch] = useReducer(toDoReducer, initialState);
   const [visible, setVisible] = useState<boolean>(true);
-  const { getInput, getNote, getTitle, resetNote, n, search } = useTodo();
+  const { getInput, getNote, getTitle, resetNote, n, search, editT } =
+    useTodo();
   const changeVisible = () => {
     setVisible(!visible);
   };
@@ -39,6 +42,9 @@ export const ToDoProvider = ({ children }: props) => {
   };
   const deleteNote = (key: string) => {
     dispatch({ type: "deleteNote", key });
+  };
+  const editNote = (key: string) => {
+    dispatch({ type: "editNote", n: { ...n, key } });
   };
   return (
     <ToDoContext.Provider
@@ -54,6 +60,8 @@ export const ToDoProvider = ({ children }: props) => {
         getTitle,
         resetNote,
         search,
+        editT,
+        editNote,
       }}
     >
       {children}
