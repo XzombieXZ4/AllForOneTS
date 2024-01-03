@@ -1,4 +1,10 @@
-import { createContext, useReducer, useState, ChangeEvent } from "react";
+import {
+  createContext,
+  useReducer,
+  useState,
+  ChangeEvent,
+  useEffect,
+} from "react";
 import { noteInterface } from "../interfaces/ToDoInterfaces";
 import { toDoReducer } from "../helpers/toDoReducer";
 import { useTodo } from "../hooks/useTodo";
@@ -28,9 +34,16 @@ export const ToDoContext = createContext<ToDoContextProps>(
 );
 
 const initialState: noteInterface[] = [];
+const init = () => {
+  return JSON.parse(localStorage.getItem("toDoList") || "");
+};
 
 export const ToDoProvider = ({ children }: props) => {
-  const [noteListState, dispatch] = useReducer(toDoReducer, initialState);
+  const [noteListState, dispatch] = useReducer(toDoReducer, initialState, init);
+  useEffect(() => {
+    localStorage.setItem("toDoList", JSON.stringify(noteListState));
+  }, [noteListState]);
+
   const [visible, setVisible] = useState<boolean>(true);
   const { getInput, getNote, getTitle, resetNote, n, search, editT } =
     useTodo();
