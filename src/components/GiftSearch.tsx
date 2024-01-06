@@ -1,10 +1,10 @@
-// import { GiftProvider } from "../context/GiftContext";
-// import { Gift } from "./GiftComponents/Gift";
+import { GiftProvider } from "../context/GiftContext";
+import { GiftsPage } from "./GiftComponents/GiftsPage";
 
 export const GiftSearch = () => {
-  // return (
-  //   <GiftProvider>
-  //     <Gift />
-  //   </GiftProvider>
-  // );
+  return (
+    <GiftProvider>
+      <GiftsPage />
+    </GiftProvider>
+  );
 };
